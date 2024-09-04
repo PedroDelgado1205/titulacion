@@ -1,0 +1,17 @@
+#entornos virtuales
+.env
+.venv
+
+#configuracioes IDE
+.ide
+.idle
+
+#cache
+_pycache_
+__pycache__
+
+#migraciones
+migrations
+
+#archivos de multimedia
+media
