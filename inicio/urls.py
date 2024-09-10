@@ -8,4 +8,6 @@ urlpatterns = [
     path('', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('register/', registro, name='registro'),
+    path('perfil/', perfil, name='perfil'),
+    path('perfil_busqueda/<int:id_artista>', perfil_busqueda, name='perfil_busqueda'),
 ]

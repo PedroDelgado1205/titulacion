@@ -4,6 +4,7 @@ from galeria.models import Galeria
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from inicio.models import Usuario
 
 
 @login_required
@@ -52,3 +53,21 @@ def actualizar_orden(request):
             obra.save()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
+
+def buscar_artista(request):
+    query = request.GET.get('query')
+    resultados = []
+    if query:
+        resultados = Usuario.objects.filter(usuario__username__icontains=query)
+    return render(request, 'galeria/resultados_busqueda.html', {'resultados': resultados, 'query': query})
+
+def galeria_busqueda(request, autor_id):
+    autor = get_object_or_404(Usuario, id=autor_id)
+    galeria = Galeria.objects.filter(autor=autor).select_related('obra').order_by('obra__orden')
+    obras = [galeria_item.obra for galeria_item in galeria]
+    return render(request, 'galeria/galeria_busqueda.html', {'autor': autor, 'obras': obras})
+
+def ver_obra_busqueda(request, id, autor_id):
+    obra = get_object_or_404(Obra, id=id)
+    return render(request, 'galeria/ver_obra_busqueda.html', {'obra': obra, 'id_artista':autor_id})
+

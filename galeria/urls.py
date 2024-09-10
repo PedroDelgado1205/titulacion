@@ -10,4 +10,7 @@ urlpatterns = [
     path('editar/<int:id>/', editar_obra, name='editar_obra'),
     path('borrar/<int:id>/', borrar_obra, name='borrar_obra'),
     path('actualizar-orden/', actualizar_orden, name='actualizar_orden'),
+    path('buscar-artista/', buscar_artista, name='buscar_artista'),
+    path('galeria-busqueda/<int:autor_id>/', galeria_busqueda, name='galeria_busqueda'),
+    path('ver-obra/<int:id>/<int:autor_id>', ver_obra_busqueda, name='ver_obra_busqueda'),
 ]

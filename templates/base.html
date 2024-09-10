@@ -7,6 +7,7 @@
     <title>{% block title %}Artedigital{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -15,7 +16,11 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse nav justify-content-end" id="navbarNav">
+            <form class="d-flex" role="search" method="GET" action="{% url 'galeria:buscar_artista' %}">
+                <input class="form-control me-2" type="search" name="query" placeholder="Ingresa un nombre de un artista" aria-label="Search" style="width: 25vw;">
+                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'inicio:index' %}">Inicio</a>
@@ -25,6 +30,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'galeria:index' %}">Galería</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio:perfil' %}">Perfil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'inicio:logout' %}">Cerrar sesión</a>

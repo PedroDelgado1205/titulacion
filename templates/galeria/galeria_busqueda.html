@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Galería de {{ autor.usuario.username }}</h2>
+    <a href="{% url 'inicio:perfil_busqueda' autor.id %}" class="btn btn-info mt-3">Ir al perfil <i class="fa-solid fa-circle-right fa-2xl"></i></a>
+    <div class="row">
+        {% for obra in obras %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ obra.imagen.url }}" class="card-img-top" alt="{{ obra.titulo }}">
+                    <div class="card-body">
+                        <div class="col-mb-2">
+                            <h5 class="card-title">{{ obra.titulo }}</h5>
+                            <p class="card-text">{{ obra.descripcion }}</p>
+                        </div>
+                        <div class="col-mb-2">
+                            <a class="btn btn-info" href="{% url 'galeria:ver_obra_busqueda' obra.id autor.id %}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
