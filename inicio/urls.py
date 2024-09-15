@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/', registro, name='registro'),
     path('perfil/', perfil, name='perfil'),
     path('perfil_busqueda/<int:id_artista>', perfil_busqueda, name='perfil_busqueda'),
+    path('cambiar_info_perfil', cambiar_info_perfil, name='cambiar_info_perfil'),
 ]

@@ -10,10 +10,11 @@ import json
 from inicio.models import Usuario
 from django.shortcuts import get_object_or_404
 
+@login_required(login_url='/')
 def index(request):
     return render(request, 'dibujo/index.html', {})
 
-@login_required
+@login_required(login_url='/')
 @csrf_exempt
 def guardar_dibujo(request):
     if request.method == 'POST':
@@ -37,7 +38,7 @@ def guardar_dibujo(request):
 
     return JsonResponse({'status': 'error'}, status=400)
 
-@login_required
+@login_required(login_url='/')
 @csrf_exempt
 def guardar_edicion_dibujo(request):
     if request.method == 'POST':

@@ -98,13 +98,24 @@
         margin-bottom: 30px;
     }
 
+    .nav-search{
+        background-color: #F2CFC2 !important;
+    }
+
+    .lead {
+        padding-top: 25px;
+        color: #F2CFC2; 
+        font-size: 1.25rem;
+        margin-bottom: 15px;
+    }
 </style>
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container"></div>
     <h2>Galería de {{ autor.usuario.username }}</h2>
     <a href="{% url 'inicio:perfil_busqueda' autor.id %}" class="btn btn-dan mt-3">Ir al perfil <i class="fa-solid fa-circle-right fa-2xl"></i></a>
     <div class="row">
+        {% if obras %}
         {% for obra in obras %}
             <div class="col-md-4">
                 <div class="card mb-4">
@@ -123,6 +134,9 @@
                 </div>
             </div>
         {% endfor %}
+        {% else %}
+            <p class="lead">Este autor aún no tiene obras</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

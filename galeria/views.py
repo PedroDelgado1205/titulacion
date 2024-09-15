@@ -5,9 +5,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from inicio.models import Usuario
+from .models import Obra, Galeria
 
-
-@login_required
+@login_required(login_url='/')
 def index(request):
     galeria = Galeria.objects.filter(autor__usuario=request.user).select_related('obra').order_by('obra__orden')
     obras = [galeria_item.obra for galeria_item in galeria]
@@ -71,3 +71,31 @@ def ver_obra_busqueda(request, id, autor_id):
     obra = get_object_or_404(Obra, id=id)
     return render(request, 'galeria/ver_obra_busqueda.html', {'obra': obra, 'id_artista':autor_id})
 
+@csrf_exempt
+def guardar_dibujo(request):
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        descripcion = request.POST.get('descripcion')
+        imagen = request.FILES.get('imagen')  # Aquí obtenemos el archivo de imagen desde el formulario
+
+        # Verificamos si todos los datos requeridos están presentes
+        if not titulo or not descripcion or not imagen:
+            return JsonResponse({'status': 'error', 'message': 'Faltan campos requeridos'}, status=400)
+
+        usuario = request.user.usuario  # Obtenemos el usuario actual
+        count_obras = Galeria.objects.filter(autor=usuario).count()  # Contamos las obras actuales del usuario
+
+        # Creamos la obra y la guardamos en la base de datos
+        obra = Obra.objects.create(
+            titulo=titulo,
+            imagen=imagen,  # Aquí usamos directamente el archivo de imagen subido
+            orden=count_obras,  # Ajustamos el orden según las obras existentes
+            descripcion=descripcion
+        )
+
+        # Asociamos la obra con la galería del autor
+        Galeria.objects.create(autor=usuario, obra=obra)
+
+        return redirect('galeria:index')
+
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)

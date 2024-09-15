@@ -115,6 +115,7 @@
 
         .btn-dan {
             background-color: #590322 !important;
+            color: #F2CFC2;
             border: none;
         }
 
@@ -131,6 +132,23 @@
             margin-bottom: 30px;
         }
 
+        .btn-mas {
+            color: #F22E76; 
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-mas:hover {
+            color: #590322;
+        }
+
+        .modal-content{
+            background-color: #1A1929;
+        }
+
+        .nav-search{
+            background-color: #F2CFC2 !important;
+        }
     </style>
 {% endblock %}
 
@@ -139,31 +157,103 @@
     <h1 class="my-4">Galería de Obras</h1>
     <div class="row" id="sortable-gallery">
         {% for obra in obras %}
-            <div class="col-lg-4 col-md-6 mb-4" data-id="{{ obra.id }}">
-                <div class="card text-bg" style="background-color: #f22e7657;">
-                    <img src="{{ obra.imagen.url }}" class="card-img" alt="{{ obra.titulo }}">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">{{ obra.titulo }}</h5>
-                        <p class="card-text">{{ obra.descripcion }}</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group me-2" role="group" aria-label="First group">
-                                <a href="{% url 'galeria:ver_obra' obra.id %}" class="btn btn-pri"><i class="fa-solid fa-eye"></i></a>
-                                <a href="{% url 'galeria:cambiar_info' obra.id %}" class="btn btn-sec"><i class="fa-solid fa-italic"></i></a>
-                                <a href="{% url 'galeria:editar_obra' obra.id %}" class="btn btn-war"><i class="fa-solid fa-square-pen"></i></a>
-                                <form action="{% url 'galeria:borrar_obra' obra.id %}" method="POST" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-dan"><i class="fa-solid fa-trash"></i></button>
-                                </form>
-                            </div>
+        <div class="col-lg-4 col-md-6 mb-4 tarjeta" data-id="{{ obra.id }}">
+            <div class="card text-bg" style="background-color: #f22e7657;">
+                <img src="{{ obra.imagen.url }}" class="card-img" alt="{{ obra.titulo }}">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">{{ obra.titulo }}</h5>
+                    <p class="card-text">{{ obra.descripcion }}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group me-2" role="group" aria-label="First group">
+                            <a href="{% url 'galeria:ver_obra' obra.id %}" class="btn btn-pri"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{% url 'galeria:cambiar_info' obra.id %}" class="btn btn-sec"><i class="fa-solid fa-italic"></i></a>
+                            <a href="{% url 'galeria:editar_obra' obra.id %}" class="btn btn-war"><i class="fa-solid fa-square-pen"></i></a>
+                            <a href="#" class="btn btn-dan" data-bs-toggle="modal" data-bs-target="#deleteModal{{ obra.id }}"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+    
+        <!-- Modal para confirmar borrado específico para cada obra -->
+        <div class="modal fade" id="deleteModal{{ obra.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ obra.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModalLabel{{ obra.id }}">Alerta de Borrado <i class="fa-solid fa-triangle-exclamation"></i></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Has puesto mucho esfuerzo en esta obra.</p>
+                        <p class="lead">¿Estás seguro de que quieres eliminarla?</p>
+                        <p class="lead">Este cambio es irreversible y no se podrá recuperar.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-war" data-bs-dismiss="modal">Cancelar</button>
+                        <form action="{% url 'galeria:borrar_obra' obra.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-dan">Borrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}    
+
+        <!-- Modal para agregar obra -->
+        <div class="modal fade" id="agregarObraModal" tabindex="-1" aria-labelledby="agregarObraModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="agregarObraModalLabel">Agregar Obra</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data" action="{% url 'galeria:guardar_dibujo' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imagen" class="form-label">Selecciona una imagen</label>
+                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Agregar</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<div class="d-flex justify-content-around">
+    <a href="#" class="col-lg-4 col-md-6 mb-4 no-sort mas text-decoration-none btn-mas" id="agregar-obra" data-bs-toggle="modal" data-bs-target="#agregarObraModal" style="background-color: #4D4559; border: 2px dashed #F22E76; display: flex; justify-content: center; align-items: center; height: 100%; text-align: center;">
+        <div class="d-flex flex-column align-items-center" style="font-size: 1.5rem; padding: 1rem;">
+            <i class="fa-solid fa-plus" style="font-size: 2rem;"></i>
+            <p class="fs-5 mt-2 mb-0">Agregar Obra</p>
+        </div>
+    </a>
+    
+    <a href="{% url 'dibujo:index' %}" class="col-lg-4 col-md-6 mb-4 no-sort mas text-decoration-none btn-mas" id="crear-obra" style="background-color: #4D4559; border: 2px dashed #F22E76; display: flex; justify-content: center; align-items: center; height: 100%; text-align: center;">
+        <div class="d-flex flex-column align-items-center" style="font-size: 1.5rem; padding: 1rem;">
+            <i class="fa-solid fa-pencil" style="font-size: 2rem;"></i>
+            <p class="fs-5 mt-2 mb-0">Ir a Dibujar</p>
+        </div>
+    </a>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
@@ -179,7 +269,7 @@
                 animation: 150,
                 onEnd: function () {
                     var order = [];
-                    $('#sortable-gallery > div').each(function () {
+                    $('#sortable-gallery > div.tarjeta').each(function () {
                         order.push($(this).data('id'));
                     });
 
@@ -199,5 +289,6 @@
                 }
             });
         });
+
     </script>
 {% endblock %}

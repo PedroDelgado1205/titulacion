@@ -9,8 +9,9 @@
         body {
             background-color: #1A1929;
             font-family: 'Poppins', sans-serif;
+            color: #F2CFC2; /* Asegura que el texto sea visible sobre el fondo oscuro */
         }
-            /* Estilos generales de la galería */
+
         h1 {
             color: #F2CFC2;
             font-size: 2.5rem;
@@ -18,34 +19,51 @@
             margin-bottom: 30px;
             font-weight: 600;
         }
-    
+
         .btn-pri {
             background-color: #F22E76 !important;
             color: #590322 !important;
             border: none;
+            transition: background-color 0.3s, color 0.3s; /* Añadido efecto de transición */
         }
-    
+
         .btn-pri:hover {
             background-color: #590322 !important;
             color: #F22E76 !important;
         }
-    
+
         .btn-dan {
             background-color: #590322 !important;
             color: #F22E76 !important;
+            border: none;
+            transition: background-color 0.3s, color 0.3s; /* Añadido efecto de transición */
         }
-    
+
         .btn-dan:hover {
             background-color: #F22E76 !important;
             color: #590322 !important;
-            border: none;
         }
-    
-        .lead{
+
+        .lead {
             color: #F22E76;
-            font-size: 1.5rem;
+            font-size: 1.25rem; /* Tamaño ajustado para mejor legibilidad */
         }
-        </style>
+
+        .form-control {
+            background-color: #2A2D36;
+            color: #F2CFC2;
+            border: 1px solid #F22E76;
+        }
+
+        .form-control:focus {
+            border-color: #F22E76;
+            box-shadow: 0 0 0 0.2rem rgba(242, 207, 194, 0.25);
+        }
+
+        .nav-search{
+            background-color: #F2CFC2 !important;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -61,8 +79,10 @@
             <label for="descripcion" class="form-label lead">Nueva Descripción</label>
             <textarea class="form-control" id="descripcion" name="descripcion" rows="5" required>{{ obra.descripcion }}</textarea>
         </div>
-        <button type="submit" class="btn btn-pri">Guardar Cambios</button>
-        <a href="{% url 'galeria:index' %}" class="btn btn-dan">Cancelar</a>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-pri">Guardar Cambios</button>
+            <a href="{% url 'galeria:index' %}" class="btn btn-dan">Cancelar</a>
+        </div>
     </form>
 </div>
 {% endblock %}

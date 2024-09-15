@@ -27,6 +27,10 @@ body {
     background-color: #0D0C12;
 }
 
+.nav-search{
+    background-color: #F2CFC2 !important;
+}
+
 .btn-outline-success {
     color: #F22E76 !important;
     border-color: #F22E76 !important;

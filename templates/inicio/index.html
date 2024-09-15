@@ -2,9 +2,123 @@
 
 {% block title %}Inicio{% endblock %}
 
+{% block extra_css %}
+<style>
+body {
+    background-color: #1A1929;
+    font-family: 'Poppins', sans-serif;
+}
+
+.jumbotron {
+    background-color: #0D0C12;
+    color: #F2CFC2;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    color: #F2CFC2;
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+h3 {
+    color: #F22E76;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+ul {
+    color: #F2CFC2;
+    font-size: 1rem;
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+p.lead {
+    color: #F2CFC2;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+a {
+    color: #F22E76;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #590322;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4">Bienvenido a Artedigital</h1>
-    <p class="lead">Esta es la página de inicio.</p>
+    <h1 class="display-4">Bienvenido a SketchGallery</h1>
+    <p class="lead">Aquí podrás crear tus obras maestras artísticas y organizarlas a tu gusto.</p>
+    <p class="lead">Tendrás infinitas formas de presentar tu galería a otros usuarios.</p>
+</div>
+
+<h1>Características</h1>
+<div class="jumbotron">
+    <h1 class="display-4">Dibujo</h1>
+    <p class="lead">En esta página podrás dar rienda suelta a tu creatividad. Dispones de tres secciones clave:</p>
+    <h3>Capas</h3>
+    <ul>
+        <li>Puedes añadir o eliminar capas según lo requiera tu proyecto.</li>
+        <li>Reorganiza las capas con una interfaz de arrastrar y soltar.</li>
+        <li>Guarda tus dibujos, eligiendo un nombre y descripción, y también podrás descargarlos en tu dispositivo.</li>
+    </ul>
+    <h3>Lienzo</h3>
+    <ul>
+        <li>Tendrás un espacio gráfico compatible con tabletas digitalizadoras y dispositivos táctiles.</li>
+    </ul>
+    <h3>Herramientas</h3>
+    <ul>
+        <li>Puedes cambiar entre diferentes herramientas de dibujo, como: Bolígrafo, Pincel, Lápiz, Aerosol y Marcador.</li>
+        <li>Dispones de un borrador para correcciones.</li>
+        <li>Puedes cambiar el color y la opacidad de las líneas de cualquier herramienta.</li>
+        <li>El grosor de las líneas también es ajustable para las herramientas de dibujo y el borrador.</li>
+    </ul>
+</div>
+
+<div class="jumbotron">
+    <h1 class="display-4">Galería</h1>
+    <p class="lead">Aquí encontrarás todas tus obras creadas. Podrás verlas, cambiarles el nombre o descripción, editarlas o eliminarlas.</p>
+    <p class="lead">Reorganiza tus obras con una interfaz de arrastrar y soltar.</p>
+</div>
+
+<div class="jumbotron">
+    <h1 class="display-4">Perfil</h1>
+    <p class="lead">Al registrarte, deberás dirigirte a esta sección para actualizar tu información y foto de perfil.</p>
+    <p class="lead">Podrás editar tu información cuantas veces quieras.</p>
+</div>
+
+<div class="jumbotron">
+    <h1 class="display-4">Barra de búsqueda</h1>
+    <p class="lead">Busca a otros usuarios ingresando su nombre o alguna semejanza. Si están registrados, podrás ver sus galerías.</p>
+    <p class="lead">También podras ver sus perfiles.</p>
+</div>
+
+<h1>Desarrollo del Proyecto</h1>
+<div class="jumbotron">
+    <h1 class="display-4">¿Por qué?</h1>
+    <p class="lead">SketchGallery se creó para combinar la creación de dibujos y la gestión de los mismos en un solo lugar, optimizando el flujo de trabajo.</p>
+</div>
+
+<div class="jumbotron">
+    <h1 class="display-4">¿Quién?</h1>
+    <p class="lead">Desarrollado por Pedro Delgado usando Django para el backend y HTML, CSS, JS y Bootstrap para el frontend. Los datos se almacenan en SQLite.</p>
+    <p class="lead">Puedes ver el repositorio en GitHub <a href="https://github.com/PedroDelgado1205/titulacion.git" target="_blank">aquí</a>, o explorar otros proyectos <a href="https://github.com/PedroDelgado1205?tab=repositories" target="_blank">aquí</a>.</p>
+    <br>
+    <p class="lead">Esta aplicación web fue desarrollada como un Proyecto Integrador en la carrera de Desarrollo de Software del Instituto Wissen.</p>
 </div>
 {% endblock %}

@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('saveDrawing').addEventListener('click', () => {
-        const nameDraw = document.getElementById('drawName').value; // Cambié a 'drawName'
+        const nameDraw = document.getElementById('drawName').value; 
         const descriptionDraw = document.getElementById('descriptionDraw').value;
         const combinedCanvas = combineCanvases();
     
