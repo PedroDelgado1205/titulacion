@@ -8,6 +8,10 @@
         font-family: 'Poppins', sans-serif;
     }
 
+    .row{
+        padding-top: 25px;
+    }
+
     .gallery {
         display: flex;
         flex-wrap: wrap;
@@ -73,6 +77,10 @@
     .btn-pri {
         background-color: #F22E76 !important;
         border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s, color 0.3s;
     }
 
     .btn-pri:hover {
@@ -83,6 +91,10 @@
         background-color: #590322 !important;
         color: #F2CFC2 !important;
         border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s, color 0.3s;
     }
 
     .btn-dan:hover {
@@ -111,7 +123,7 @@
 </style>
 {% endblock %}
 {% block content %}
-<div class="container"></div>
+<div class="container">
     <h2>Galería de {{ autor.usuario.username }}</h2>
     <a href="{% url 'inicio:perfil_busqueda' autor.id %}" class="btn btn-dan mt-3">Ir al perfil <i class="fa-solid fa-circle-right fa-2xl"></i></a>
     <div class="row">
