@@ -6,6 +6,7 @@
 {% block extra_css %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
 body {
     background-color: #1A1929;
@@ -81,6 +82,19 @@ h2 {
     margin-right: 5px;
 }
 
+.err{
+    color: #F22E76;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.new-img-preview{
+    max-width: 250px;
+    max-height: 250px;
+    border: #F22E76 1px solid;
+    border-radius: 20px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     h2 {
@@ -101,7 +115,15 @@ h2 {
         {% csrf_token %}
         <div class="mb-3">
             <label for="foto" class="form-label">Foto de perfil</label>
-            <input type="file" class="form-control" id="foto" name="foto">
+            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="revisar()">
+            <div id="msg_err" hidden="ture">
+                <p class="err">Porfavor selecione un archivo del tipo:<br>'png' | 'jpg' | 'PNG' | 'jpeg' | 'JPG'</p>
+            </div>
+        </div>
+        <div class="mb-3" id="new_img">
+            <div class="d-flex justify-content-center">
+                <img src="{{ usuario.foto.url }}" foto_actual="{{ usuario.foto.url }}" class="new-img-preview" alt="Nueva imagen" id="img_preview">
+            </div>
         </div>
         <div class="mb-3">
             <label for="biografia" class="form-label">Biografía</label>
@@ -115,8 +137,32 @@ h2 {
     </form>
     <a href="{% url 'inicio:perfil' %}" class="btn btn-secondary mt-3"><i class="fa-solid fa-circle-left"></i> Volver al perfil</a>
 </div>
+
 {% endblock %}
 
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-{% endblock %}
+    <script>
+        function revisar(){
+            var ruta = []
+            const error = document.getElementById('msg_err');
+            const foto = document.getElementById('foto').value;
+            const img = document.getElementById('img_preview');
+            const foto_actual = img.getAttribute('foto_actual');
+            ruta = foto.split('.');
+            console.log(foto);
+            console.log(ruta);
+            const index = ruta.length
+            const ext = ruta[index-1]
+            console.log(ext);
+        if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg' && ext !== 'PNG' && ext !== 'JPG')  {
+                error.hidden = false;
+                document.getElementById('foto').value = '';
+                img.src = foto_actual
+            }else{
+                error.hidden = true;
+                img.src = URL.createObjectURL(document.getElementById('foto').files[0]);   
+            }
+        }
+    </script>
+    {% endblock %}

@@ -48,13 +48,8 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
         }
 
-        .card-img-top {
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-
         .card-title {
-            color: #F2CFC2;
+            color: #F22E76;
             font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 10px;
@@ -65,7 +60,7 @@
         }
 
         .card-text{
-            color: #F2CFC2;
+            color: #F22E76;
             font-size: 1rem;
         }
 
@@ -159,6 +154,25 @@
             background-color: #F2CFC2 !important;
         }
         
+        .new-img-preview{
+            max-width: 250px;
+            border: #F22E76 1px solid;
+            border-radius: 20px;
+        }
+
+        .err{
+            color: #F2CFC2;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-img{
+            max-width: 250px;
+            max-height: 250px;
+            object-fit: cover;
+            margin: auto;
+            padding: auto;
+        }
     </style>
 {% endblock %}
 
@@ -168,7 +182,7 @@
     <div class="row" id="sortable-gallery">
         {% for obra in obras %}
         <div class="col-lg-4 col-md-6 mb-4 tarjeta" data-id="{{ obra.id }}">
-            <div class="card text-bg" style="background-color: #f22e7657;">
+            <div class="card text-bg" style="background-color: #fcfcfc;">
                 <img src="{{ obra.imagen.url }}" class="card-img" alt="{{ obra.titulo }}">
                 <div class="card-img-overlay">
                     <h5 class="card-title">{{ obra.titulo }}</h5>
@@ -224,20 +238,28 @@
                         <form method="POST" enctype="multipart/form-data" action="{% url 'galeria:guardar_dibujo' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="titulo" class="form-label">Título</label>
+                                <label for="imagen" class="form-label lead">Selecciona una imagen</label>
+                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" onchange="revisar()">
+                                <div id="msg_err" hidden="ture">
+                                    <p class="err">Porfavor selecione un archivo del tipo:<br>png' | 'jpg' | 'PNG' | 'jpeg' | 'JPG'</p>
+                                </div>
+                            </div>
+                            <div class="mb-3" id="new_img" hidden="ture">
+                                <div class="d-flex justify-content-center">
+                                    <img src="" class="new-img-preview" alt="Nueva imagen" id="img_preview">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label lead">Título</label>
                                 <input type="text" class="form-control" id="titulo" name="titulo" required>
                             </div>
                             <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción</label>
+                                <label for="descripcion" class="form-label lead">Descripción</label>
                                 <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="imagen" class="form-label">Selecciona una imagen</label>
-                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
-                            </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Agregar</button>
+                                <button type="button" class="btn btn-war" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-pri">Agregar</button>
                             </div>
                         </form>
                         
@@ -299,6 +321,43 @@
                 }
             });
         });
+    </script>
+    <script>
+        function revisar() {
+            const error = document.getElementById('msg_err');
+            const fotoInput = document.getElementById('imagen');
+            const imgCont = document.getElementById('new_img');
+            const img = document.getElementById('img_preview');
 
+            // Comprobar si se seleccionó un archivo
+            if (fotoInput.files && fotoInput.files.length > 0) {
+                const foto = fotoInput.files[0];  // Accedemos al archivo seleccionado
+                const ruta = foto.name.split('.'); // Obtenemos la extensión del archivo
+                const ext = ruta[ruta.length - 1].toLowerCase();  // Convertimos la extensión a minúsculas
+
+                console.log(foto);
+                console.log(ruta);
+                console.log(ext);
+
+                // Validar tipo de archivo
+                if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
+                    error.hidden = false;
+                    imgCont.hidden = true;
+                    fotoInput.value = '';  // Limpiar el input si el archivo no es válido
+                } else {
+                    error.hidden = true;  
+
+                    // Crear una URL a partir del archivo seleccionado para la vista previa
+                    const objectURL = URL.createObjectURL(foto);
+                    img.src = objectURL;  // Asignar la URL como fuente de la imagen
+                    imgCont.hidden = false;  // Mostrar la vista previa
+                }
+            } else {
+                // Si no se seleccionó ningún archivo
+                console.error("No se ha seleccionado ningún archivo.");
+                error.hidden = false;
+                imgCont.hidden = true;
+            }
+        }
     </script>
 {% endblock %}
