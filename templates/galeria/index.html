@@ -180,7 +180,9 @@
 <div class="container">
     <h1 class="my-4">Galería de Obras</h1>
     <div class="row" id="sortable-gallery">
+        <!-- carga de las obras -->
         {% for obra in obras %}
+        <!-- tarjetas para contener las obras -->
         <div class="col-lg-4 col-md-6 mb-4 tarjeta" data-id="{{ obra.id }}">
             <div class="card text-bg" style="background-color: #fcfcfc;">
                 <img src="{{ obra.imagen.url }}" class="card-img" alt="{{ obra.titulo }}">
@@ -190,10 +192,15 @@
                 </div>
                 <div class="card-footer">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <!-- botones para la getion de la obra -->
                         <div class="btn-group me-2" role="group" aria-label="First group">
+                            <!-- ver obra -->
                             <a href="{% url 'galeria:ver_obra' obra.id %}" class="btn btn-pri"><i class="fa-solid fa-eye"></i></a>
+                            <!-- cambiar informacion -->
                             <a href="{% url 'galeria:cambiar_info' obra.id %}" class="btn btn-sec"><i class="fa-solid fa-italic"></i></a>
+                            <!-- editar obra -->
                             <a href="{% url 'galeria:editar_obra' obra.id %}" class="btn btn-war"><i class="fa-solid fa-square-pen"></i></a>
+                            <!-- borrar obra -->
                             <a href="#" class="btn btn-dan" data-bs-toggle="modal" data-bs-target="#deleteModal{{ obra.id }}"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </div>
@@ -216,6 +223,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-war" data-bs-dismiss="modal">Cancelar</button>
+                        <!-- formualrio para borrar una obra -->
                         <form action="{% url 'galeria:borrar_obra' obra.id %}" method="POST" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-dan">Borrar</button>
@@ -235,15 +243,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <!-- formulario para agregar una obra -->
                         <form method="POST" enctype="multipart/form-data" action="{% url 'galeria:guardar_dibujo' %}">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="imagen" class="form-label lead">Selecciona una imagen</label>
                                 <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" onchange="revisar()">
+                                <!-- mensaje de error en de formato no admitido -->
                                 <div id="msg_err" hidden="ture">
                                     <p class="err">Porfavor selecione un archivo del tipo:<br>png' | 'jpg' | 'PNG' | 'jpeg' | 'JPG'</p>
                                 </div>
                             </div>
+                            <!-- vista previa de la obra a subir -->
                             <div class="mb-3" id="new_img" hidden="ture">
                                 <div class="d-flex justify-content-center">
                                     <img src="" class="new-img-preview" alt="Nueva imagen" id="img_preview">
@@ -271,6 +282,7 @@
 </div>
 
 <div class="d-flex justify-content-around">
+    <!-- boton para abir el modal para agregar obra -->
     <a href="#" class="col-lg-4 col-md-6 mb-4 no-sort mas text-decoration-none btn-mas" id="agregar-obra" data-bs-toggle="modal" data-bs-target="#agregarObraModal" style="background-color: #4D4559; border: 2px dashed #F22E76; display: flex; justify-content: center; align-items: center; height: 100%; text-align: center;">
         <div class="d-flex flex-column align-items-center" style="font-size: 1.5rem; padding: 1rem;">
             <i class="fa-solid fa-plus" style="font-size: 2rem;"></i>
@@ -278,6 +290,7 @@
         </div>
     </a>
     
+    <!-- boton para ir al liezo de dibujo -->
     <a href="{% url 'dibujo:index' %}" class="col-lg-4 col-md-6 mb-4 no-sort mas text-decoration-none btn-mas" id="crear-obra" style="background-color: #4D4559; border: 2px dashed #F22E76; display: flex; justify-content: center; align-items: center; height: 100%; text-align: center;">
         <div class="d-flex flex-column align-items-center" style="font-size: 1.5rem; padding: 1rem;">
             <i class="fa-solid fa-pencil" style="font-size: 2rem;"></i>
@@ -295,6 +308,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
+        // funcion para cambiar el orden de las obras
         document.addEventListener('DOMContentLoaded', function () {
             var galleryGrid = document.getElementById('sortable-gallery');
             new Sortable(galleryGrid, {
@@ -306,7 +320,7 @@
                     });
 
                     $.ajax({
-                        url: "{% url 'galeria:actualizar_orden' %}",
+                        url: "{% url 'galeria:actualizar_orden' %}", // ural para guardar el nuevo orden
                         method: "POST",
                         data: {
                             orden: order,
@@ -323,6 +337,7 @@
         });
     </script>
     <script>
+        // funcion para revisar el formato de la obra a subir
         function revisar() {
             const error = document.getElementById('msg_err');
             const fotoInput = document.getElementById('imagen');

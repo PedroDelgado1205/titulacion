@@ -89,6 +89,7 @@ a:hover {
 {% block content %}
     <div class="container d-flex flex-column justify-content-center align-items-center">
         <h2>Registro</h2>
+        <!-- Formulario para registrarse -->
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -111,7 +112,9 @@ a:hover {
                 <label for="id_password">Contraseña:</label>
                 <input type="password" class="form-control" id="id_password" name="password" required>
             </div>
+            <!-- boton para valiar y registrarse -->
             <button type="submit" class="btn btn-primary">Registrar</button>
+            <!-- boton para volver al login -->
             <a href="{% url 'inicio:logout' %}">Volver</a>
         </form>
     </div>

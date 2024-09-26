@@ -3,4 +3,4 @@ from inicio.models import Usuario
 
 # Register your models here.
 
-admin.site.register(Usuario)
+admin.site.register(Usuario) # Registro del modelo Usuario en el usuario del ADMIN

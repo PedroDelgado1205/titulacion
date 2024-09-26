@@ -70,18 +70,22 @@ img {
 
 {% block content %}
 <div class="container">
+    <!-- titulo de la orbra -->
     <h1 class="my-4 text-center">{{ obra.titulo }}</h1>
     <div class="container d-flex flex-column justify-content-center align-items-center">
         <div class="obra d-flex">
             <div class="contenedor-obra">
+                <!-- imagen de la obra -->
                 <img src="{{ obra.imagen.url }}" alt="{{ obra.titulo }}" class="img-fluid pe-3" style="max-width: 100%; height: auto; width: 500px;">
             </div>
             <div class="ps-3">
+                <!-- descripcion de la obra -->
                 <p class="lead">{{ obra.descripcion }}</p>
             </div>
         </div>
         
         <a href="{% url 'galeria:index' %}" class="btn btn-pri mt-4">
+            <!-- boton para volver a la galeria -->
             <i class="fa-solid fa-circle-left fa-lg"></i> Volver a la galería
         </a>
     </div>

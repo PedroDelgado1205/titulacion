@@ -96,6 +96,7 @@
 
 {% block content %}
 <div class="container mt-5">
+    <!-- Perfil de un usuario buscado -->
     <h2>Perfil de {{ usuario.usuario.username }}</h2>
     <div class="row">
         <div class="col-md-4 d-flex justify-content-center align-items-center">
@@ -106,6 +107,7 @@
             <p class="lead"><strong>Email:</strong> {{ usuario.usuario.email }}</p>
             <p class="lead"><strong>Biografía:</strong> {{ usuario.biografia }}</p>
             <p class="lead"><strong>Edad:</strong> {{ usuario.edad }}</p>
+            <!-- Botón para volver a la galería -->
             <a href="{% url 'galeria:galeria_busqueda' id_artista %}" class="btn btn-pri mt-3">
                 <i class="fa-solid fa-circle-left fa-2xl"></i> Volver a la galería
             </a>

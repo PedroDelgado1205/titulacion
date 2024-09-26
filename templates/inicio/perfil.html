@@ -95,6 +95,7 @@
 
 {% block content %}
 <div class="container mt-5">
+    <!-- perfil del usuario -->
     <h2>Perfil de {{ usuario.usuario.username }}</h2>
     <div class="row">
         <div class="col-md-4 d-flex justify-content-center align-items-center">
@@ -105,6 +106,7 @@
             <p class="lead"><strong>Email:</strong> {{ usuario.usuario.email }}</p>
             <p class="lead"><strong>Biografía:</strong> {{ usuario.biografia }}</p>
             <p class="lead"><strong>Edad:</strong> {{ usuario.edad }}</p>
+            <!-- Botón para cambiar información del usuario -->
             <a href="{% url 'inicio:cambiar_info_perfil' %}" class="btn btn-pri mt-3">
                 <i class="fa-solid fa-circle-info"></i> Cambiar Info
             </a>

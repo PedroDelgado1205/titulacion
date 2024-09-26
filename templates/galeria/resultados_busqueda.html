@@ -134,6 +134,7 @@
 <div class="container mt-4">
     <h2>Resultados de la búsqueda</h2>
     {% if resultados %}
+        <!-- muestra los resultados que coinciden con lo solicitado encontrados de los usuarios registrados -->
         {% for artista in resultados %}
             <a href="{% url 'galeria:galeria_busqueda' artista.id %}" class="card-link">
                 <div class="card" style="width: 15%;">
@@ -145,6 +146,7 @@
             </a>                    
         {% endfor %}
     {% else %}
+        <!-- mensaje de que no se encontraron usuarios -->
         <p>No se encontraron resultados para "{{ query }}"</p>
     {% endif %}
 </div>

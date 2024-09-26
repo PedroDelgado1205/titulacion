@@ -10,14 +10,15 @@ import json
 from inicio.models import Usuario
 from django.shortcuts import get_object_or_404
 
-@login_required(login_url='/')
+@login_required(login_url='/') # login
 def index(request):
     return render(request, 'dibujo/index.html', {})
 
 @login_required(login_url='/')
 @csrf_exempt
-def guardar_dibujo(request):
+def guardar_dibujo(request): # guardar dibujo
     if request.method == 'POST':
+        # Información del dibujo a guardar 
         data = json.loads(request.body)
         titulo = data.get('titulo')
         descripcion = data.get('descripcion')
@@ -26,7 +27,7 @@ def guardar_dibujo(request):
         usuario = request.user.usuario 
         count_obras = Galeria.objects.filter(autor=usuario).count() 
 
-        format, imgstr = imagen_data.split(';base64,')
+        format, imgstr = imagen_data.split(';base64,') # imagen recibida en formato base64 por comodidad
         ext = format.split('/')[-1]
         imagen = ContentFile(base64.b64decode(imgstr), name=f'{titulo}.{ext}')
 
@@ -40,11 +41,11 @@ def guardar_dibujo(request):
 
 @login_required(login_url='/')
 @csrf_exempt
-def guardar_edicion_dibujo(request):
+def guardar_edicion_dibujo(request): # guardar edicion
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-
+            # Información del dibujo a guardar 
             obra_id = data.get('id')
             nuevo_titulo = data.get('titulo')
             nueva_descripcion = data.get('descripcion')

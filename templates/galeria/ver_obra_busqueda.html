@@ -85,18 +85,23 @@ img {
 
 {% block content %}
 <div class="container">
+    <!-- titulo de la obra -->
     <h1 class="my-4 text-center">{{ obra.titulo }}</h1>
     <div class="container d-flex flex-column justify-content-center align-items-center">
         <idv class="obra d-flex">
+            <!-- imagen de la obra -->
             <div class="contenedor-obra">
                 <img src="{{ obra.imagen.url }}" alt="{{ obra.titulo }}" class="img-fluid pe-3" style="max-width: 100%; height: auto; width: 500px;">
             </div>
+            <!-- descripcion de la obra -->
             <div class="ps-3">
                 <p class="lead">{{ obra.descripcion }}</p>
             </div>
         </idv>
         <div class="btn-group me-2" role="group" aria-label="First group">
+            <!-- boton para regresar a la galeria del usuario -->
             <a href="{% url 'galeria:galeria_busqueda' id_artista %}" class="btn btn-pri mt-4"><i class="fa-solid fa-circle-left fa-2xl"></i> Volver a la galería</a>
+            <!-- boton para ir al perfil del usuario -->
             <a href="{% url 'inicio:perfil_busqueda' id_artista %}" class="btn btn-war mt-4">Ir al perfil <i class="fa-solid fa-circle-right fa-2xl"></i></a>
         </div>
     </div>

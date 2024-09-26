@@ -111,17 +111,20 @@ h2 {
 {% block content %}
 <div class="container">
     <h2>Cambiar información de perfil</h2>
+    <!-- formulario para cambiar la informacion del usuario -->
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label for="foto" class="form-label">Foto de perfil</label>
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="revisar()">
             <div id="msg_err" hidden="ture">
+                <!-- mensaje de error de formto de la foto del usuario -->
                 <p class="err">Porfavor selecione un archivo del tipo:<br>'png' | 'jpg' | 'PNG' | 'jpeg' | 'JPG'</p>
             </div>
         </div>
         <div class="mb-3" id="new_img">
             <div class="d-flex justify-content-center">
+                <!-- imagen de perfil del usuario -->
                 <img src="{{ usuario.foto.url }}" foto_actual="{{ usuario.foto.url }}" class="new-img-preview" alt="Nueva imagen" id="img_preview">
             </div>
         </div>
@@ -143,6 +146,7 @@ h2 {
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+        //Funcion para revisar el formato de la foto
         function revisar(){
             var ruta = []
             const error = document.getElementById('msg_err');
@@ -158,10 +162,10 @@ h2 {
         if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg' && ext !== 'PNG' && ext !== 'JPG')  {
                 error.hidden = false;
                 document.getElementById('foto').value = '';
-                img.src = foto_actual
+                img.src = foto_actual // en caso de error regresa a la image anterio
             }else{
                 error.hidden = true;
-                img.src = URL.createObjectURL(document.getElementById('foto').files[0]);   
+                img.src = URL.createObjectURL(document.getElementById('foto').files[0]); // muetra la nueva imagen
             }
         }
     </script>

@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+# Modelo Obra, para poder realizar el CRUD de las obras
 class Obra(models.Model):
     titulo = models.CharField(max_length=100)
     descripcion = models.TextField()

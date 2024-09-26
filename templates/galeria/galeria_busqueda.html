@@ -129,12 +129,16 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <h2>Galería de {{ autor.usuario.username }}</h2>
+    <!-- Título de la galería -->
+    <h2>Galería de {{ autor.usuario.username }}</h2> 
+    <!-- Botón para ir al perfil del autor buscado -->
     <a href="{% url 'inicio:perfil_busqueda' autor.id %}" class="btn btn-dan mt-3">Ir al perfil <i class="fa-solid fa-circle-right fa-2xl"></i></a>
     <div class="row">
+        <!-- carga de las obras del autor -->
         {% if obras %}
         {% for obra in obras %}
             <div class="col-md-4">
+                <!-- tarjetas para contener las obras -->
                 <div class="card mb-4">
                     <img src="{{ obra.imagen.url }}" class="card-img-top" alt="{{ obra.titulo }}">
                     <div class="card-body d-flex align-items-center justify-content-around">
@@ -143,6 +147,7 @@
                             <p class="card-text">{{ obra.descripcion }}</p>
                         </div>
                         <div class="col-mb-2">
+                            <!-- botón para ver la obra -->
                             <a class="btn btn-pri" href="{% url 'galeria:ver_obra_busqueda' obra.id autor.id %}">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
@@ -152,6 +157,7 @@
             </div>
         {% endfor %}
         {% else %}
+        <!-- mensaje si el autor no tiene obras -->
             <p class="lead">Este autor aún no tiene obras</p>
         {% endif %}
     </div>

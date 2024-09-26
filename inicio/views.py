@@ -4,16 +4,16 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegistroForm, LoginForm
 from .models import Usuario
 
-def index(request):
+def index(request): # página de inicio o de información
     return render(request, 'inicio/index.html', {})
 
-def login_view(request):
+def login_view(request): # login
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=username, password=password) # verificar la informacio para poer ingresar
             if user is not None:
                 login(request, user)
                 return redirect('galeria:index')
@@ -24,14 +24,15 @@ def login_view(request):
     
     return render(request, 'inicio/login.html', {'form': form})
 
-def logout_view(request):
+def logout_view(request): # logout
     logout(request)
     return redirect('inicio:login')
 
-def registro(request):
+def registro(request): # registro
     if request.method == 'POST':
         form = RegistroForm(request.POST)
         if form.is_valid():
+            # datos necesarios para poder crear una cuenta
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
@@ -51,7 +52,7 @@ def registro(request):
     return render(request, 'inicio/registro.html', {'form': form})
 
 @login_required(login_url='/')
-def perfil(request):
+def perfil(request): # perfil
     usuario = Usuario.objects.get(usuario=request.user)
     context = {
         'usuario': usuario,
@@ -59,7 +60,7 @@ def perfil(request):
     return render(request, 'inicio/perfil.html', context)
 
 @login_required(login_url='/')
-def perfil_busqueda(request, id_artista):
+def perfil_busqueda(request, id_artista): # perfil buscado
     usuario = get_object_or_404(Usuario, id=id_artista)
     context = {
         'usuario': usuario,
@@ -68,10 +69,11 @@ def perfil_busqueda(request, id_artista):
     return render(request, 'inicio/perfil_busqueda.html', context)
 
 @login_required(login_url='/')
-def cambiar_info_perfil(request):
+def cambiar_info_perfil(request): # cambio de informacio de usuario
     usuario = request.user.usuario  # Obtener el usuario logueado
 
     if request.method == 'POST':
+        # adtos nesecarios para actualizar la información del usuario
         foto = request.FILES.get('foto')
         biografia = request.POST.get('biografia')
         edad = request.POST.get('edad')

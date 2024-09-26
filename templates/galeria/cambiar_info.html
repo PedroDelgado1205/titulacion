@@ -94,6 +94,7 @@ h1 {
 {% block content %}
 <div class="container mt-5">
     <h1>Cambiar Nombre y Descripción de la Obra</h1>
+    <!-- formulario para cambiar el nombre y descripcion de la capa -->
     <form method="POST" action="{% url 'galeria:cambiar_info' obra.id %}">
         {% csrf_token %}
         <div class="mb-3">
